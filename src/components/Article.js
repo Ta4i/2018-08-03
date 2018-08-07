@@ -1,14 +1,26 @@
-import * as React from "react";
+import React, { Fragment } from "react";
+import CommentsList from "./CommentsList";
 
 export class Article extends React.PureComponent {
   render() {
-    console.log("R");
     const { article, isOpen } = this.props;
+
+    const renderArticle = () => {
+      if (isOpen) {
+        return (
+          <Fragment>
+            <p>{article.text}</p>
+            {article.comments ? <CommentsList {...article} /> : null}
+          </Fragment>
+        );
+      }
+    };
+
     return (
       <li>
-        {article.title}
-        <button onClick={this.handleClick}>close</button>
-        {isOpen ? <p>{article.text}</p> : null}
+        <h2>{article.title}</h2>
+        <button onClick={this.handleClick}>{isOpen ? "Close" : "Open"}</button>
+        {renderArticle()}
       </li>
     );
   }
