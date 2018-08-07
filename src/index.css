@@ -3,3 +3,9 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+h2,
+h3 {
+  display: inline-block;
+  margin-right: 15px;
+}
