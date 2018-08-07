@@ -7,7 +7,8 @@ export default class ArticleList extends React.Component {
   state = {
     openArticleId: null,
     inputValue: "",
-    selectValue: []
+    selectValue: [],
+    datePickerValue: new Date()
   };
 
   render() {
@@ -25,7 +26,17 @@ export default class ArticleList extends React.Component {
           isMulti
           onChange={this.onChangeSelect}
         />
-        <DatePicker />
+        <DatePicker
+          selectRange
+          value={this.state.datePickerValue}
+          onChange={this.onChangeDate}
+        />
+        <p>
+          {this.state.datePickerValue.length === 2 &&
+            `${this.state.datePickerValue[0]} — ${
+              this.state.datePickerValue[1]
+            }`}
+        </p>
         <ul>
           {articles.map(article => (
             <Article
@@ -47,9 +58,16 @@ export default class ArticleList extends React.Component {
     });
   };
 
-  onChangeSelect = event => {
+  onChangeDate = value => {
+    console.dir(value);
     this.setState({
-      selectValue: event
+      datePickerValue: value
+    });
+  };
+
+  onChangeSelect = value => {
+    this.setState({
+      selectValue: value
     });
   };
 
