@@ -6,13 +6,11 @@ export default class Comment extends React.PureComponent {
     return (
       <li>
         <h4>{item.user}</h4>
-        <button onClick={this.handleClick}>{isOpen ? "close" : "open"}</button>
+        <button onClick={this.props.toggleVisibility}>
+          {isOpen ? "close" : "open"}
+        </button>
         {isOpen ? <p>{item.text}</p> : null}
       </li>
     );
   }
-
-  handleClick = () => {
-    this.props.toggleVisibility(this.props.item.id);
-  };
 }

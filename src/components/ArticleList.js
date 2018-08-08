@@ -23,11 +23,13 @@ export default class ArticleList extends React.Component {
         <input
           name="first_name"
           value={this.state.formValue["first_name"]}
+          placeholder="Имя"
           onChange={this.handleInputChange}
         />
         <input
           name="second_name"
           value={this.state.formValue["second_name"]}
+          placeholder="Фамилия"
           onChange={this.handleInputChange}
         />
         <Select
@@ -49,11 +51,7 @@ export default class ArticleList extends React.Component {
             `${this.state.datePickerValue[0].toDateString()} — ${this.state.datePickerValue[1].toDateString()}`}
         </p>
         <ul>
-          <TogglerController
-            itemClass={Article}
-            items={articles}
-            toggleVisibility={this.toggleVisibility}
-          />
+          <TogglerController itemClass={Article} items={articles} />
         </ul>
       </div>
     );
