@@ -2,12 +2,16 @@ import * as React from "react";
 import Select from "react-select";
 import { Article } from "./Article";
 import DatePicker from "react-date-picker";
+import decorator from "./decorator";
+
+// безполезная обертка. для теста как раотате
+const DecDatePicker = decorator(DatePicker);
 
 export default class ArticleList extends React.Component {
   state = {
     openArticleId: null,
-    inputValue: "",
     selectValue: [],
+    formValue: {},
     datePickerValue: new Date()
   };
 
@@ -16,7 +20,16 @@ export default class ArticleList extends React.Component {
     return (
       <div>
         UserName:{" "}
-        <input value={this.state.inputValue} onChange={this.onChange} />
+        <input
+          name="first_name"
+          value={this.state.formValue["first_name"]}
+          onChange={this.handleInputChange}
+        />
+        <input
+          name="second_name"
+          value={this.state.formValue["second_name"]}
+          onChange={this.handleInputChange}
+        />
         <Select
           value={this.state.selectValue}
           options={articles.map(article => ({
@@ -26,7 +39,7 @@ export default class ArticleList extends React.Component {
           isMulti
           onChange={this.onChangeSelect}
         />
-        <DatePicker
+        <DecDatePicker
           selectRange
           value={this.state.datePickerValue}
           onChange={this.onChangeDate}
@@ -51,10 +64,12 @@ export default class ArticleList extends React.Component {
     );
   }
 
-  onChange = event => {
-    console.log(event.target.value);
+  handleInputChange = event => {
     this.setState({
-      inputValue: event.target.value
+      formValue: {
+        ...this.state.formValue,
+        [event.target.name]: event.target.value
+      }
     });
   };
 
