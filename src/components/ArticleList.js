@@ -3,13 +3,13 @@ import Select from "react-select";
 import { Article } from "./Article";
 import DatePicker from "react-date-picker";
 import decorator from "./decorator";
+import TogglerController from "./TogglerController";
 
 // безполезная обертка. для теста как раотает
 const DecDatePicker = decorator(DatePicker);
 
 export default class ArticleList extends React.Component {
   state = {
-    openArticleId: null,
     selectValue: [],
     formValue: {},
     datePickerValue: [new Date(), new Date()]
@@ -49,14 +49,11 @@ export default class ArticleList extends React.Component {
             `${this.state.datePickerValue[0].toDateString()} — ${this.state.datePickerValue[1].toDateString()}`}
         </p>
         <ul>
-          {articles.map(article => (
-            <Article
-              key={article.id}
-              article={article}
-              isOpen={this.state.openArticleId === article.id}
-              toggleVisibility={this.toggleVisibility}
-            />
-          ))}
+          <TogglerController
+            itemClass={Article}
+            items={articles}
+            toggleVisibility={this.toggleVisibility}
+          />
         </ul>
       </div>
     );
@@ -82,12 +79,6 @@ export default class ArticleList extends React.Component {
   onChangeSelect = value => {
     this.setState({
       selectValue: value
-    });
-  };
-
-  toggleVisibility = id => {
-    this.setState({
-      openArticleId: id === this.state.openArticleId ? null : id
     });
   };
 }
