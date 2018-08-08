@@ -12,7 +12,7 @@ export default class ArticleList extends React.Component {
     openArticleId: null,
     selectValue: [],
     formValue: {},
-    datePickerValue: new Date()
+    datePickerValue: [new Date(), new Date()]
   };
 
   render() {
@@ -45,10 +45,8 @@ export default class ArticleList extends React.Component {
           onChange={this.onChangeDate}
         />
         <p>
-          {this.state.datePickerValue.length === 2 &&
-            `${this.state.datePickerValue[0]} — ${
-              this.state.datePickerValue[1]
-            }`}
+          {this.state.datePickerValue &&
+            `${this.state.datePickerValue[0].toDateString()} — ${this.state.datePickerValue[1].toDateString()}`}
         </p>
         <ul>
           {articles.map(article => (
@@ -65,6 +63,7 @@ export default class ArticleList extends React.Component {
   }
 
   handleInputChange = event => {
+    // храним в стейте объект со всеми значениями формы для удобства
     this.setState({
       formValue: {
         ...this.state.formValue,
