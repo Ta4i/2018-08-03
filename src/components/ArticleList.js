@@ -4,7 +4,7 @@ import { Article } from "./Article";
 import DatePicker from "react-date-picker";
 import decorator from "./decorator";
 
-// безполезная обертка. для теста как раотате
+// безполезная обертка. для теста как раотает
 const DecDatePicker = decorator(DatePicker);
 
 export default class ArticleList extends React.Component {
