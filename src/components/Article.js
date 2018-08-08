@@ -14,6 +14,10 @@ export class Article extends React.PureComponent {
   }
 
   handleClick = () => {
-    this.props.toggleVisibility(this.props.article.id);
+    if (this.props.isOpen) {
+      this.props.toggleVisibility(null);
+    } else {
+      this.props.toggleVisibility(this.props.article.id);
+    }
   };
 }
