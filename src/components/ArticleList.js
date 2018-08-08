@@ -6,7 +6,11 @@ import decorator from "./decorator";
 import TogglerController from "./TogglerController";
 
 // безполезная обертка. для теста как раотает
+
 const DecDatePicker = decorator(DatePicker);
+
+// для ArticleList написал храниение значений всех инпутов в formValue
+// так можно добавлять новые инпуты не засоряя стейт и удобно доставать все значения инпутов
 
 export default class ArticleList extends React.Component {
   state = {
@@ -58,7 +62,6 @@ export default class ArticleList extends React.Component {
   }
 
   handleInputChange = event => {
-    // храним в стейте объект со всеми значениями формы для удобства
     this.setState({
       formValue: {
         ...this.state.formValue,

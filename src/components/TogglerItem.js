@@ -1,6 +1,7 @@
 import * as React from "react";
 
 // вспомогательная обертка для работы TogglerController
+
 export default class TogglerItem extends React.PureComponent {
   render() {
     return (
