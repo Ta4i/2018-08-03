@@ -54,7 +54,7 @@ export default class ArticleList extends React.Component {
           <Moment format="DD.MM.YYYY">{this.filter.startDate}</Moment> по{" "}
           <Moment format="DD.MM.YYYY">{this.filter.endDate}</Moment>
         </div>
-        <ul>
+        <ul className="list-unstyled">
           {this.props.articles.map(article => (
             <Article
               key={article.id}
