@@ -5,7 +5,9 @@ import { Article } from "./Article";
 export default class ArticleList extends React.Component {
   state = {
     openArticleId: null,
-    inputValue: ""
+    openBtnStance: null,
+    inputValue: "",
+    tags: []
   };
 
   render() {
@@ -15,21 +17,24 @@ export default class ArticleList extends React.Component {
         UserName:{" "}
         <input value={this.state.inputValue} onChange={this.onChange} />
         <Select
-          value={{
-            value: articles[0].id,
-            label: articles[0].title
-          }}
+          name="form-field-name"
+          isMulti={true}
+          value={this.state.tags}
           options={articles.map(article => ({
             value: article.id,
             label: article.title
           }))}
+          onChange={e => this.setState({ tags: e })}
         />
         <ul>
           {articles.map(article => (
             <Article
               key={article.id}
               article={article}
-              isOpen={this.state.openArticleId === article.id}
+              isOpen={
+                this.state.openArticleId === article.id &&
+                this.state.openBtnStance === true
+              }
               toggleVisibility={this.toggleVisibility}
             />
           ))}
@@ -39,15 +44,15 @@ export default class ArticleList extends React.Component {
   }
 
   onChange = event => {
-    console.log(event.target.value);
     this.setState({
       inputValue: event.target.value
     });
   };
 
-  toggleVisibility = id => {
+  toggleVisibility = (id, stance) => {
     this.setState({
-      openArticleId: id
+      openArticleId: id,
+      openBtnStance: stance
     });
   };
 }
