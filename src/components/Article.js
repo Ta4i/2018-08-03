@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Comment } from "./Comment";
 
 export class Article extends React.PureComponent {
   state = {
@@ -13,7 +14,13 @@ export class Article extends React.PureComponent {
         {article.title}
         <button onClick={this.handleClick}>close</button>
         {isOpen ? <p>{article.text}</p> : null}
-        {isOpen ? <p>{article.comments.map(function() {})}</p> : null}
+        {isOpen ? (
+          <ul>
+            {article.comments.map(comment => (
+              <Comment key={comment.id} comment={comment} />
+            ))}
+          </ul>
+        ) : null}
       </li>
     );
   }
