@@ -37,13 +37,12 @@ export default class ArticleList extends React.Component {
       value: article.id,
       label: article.title
     }));
-    console.log(options);
 
     return (
       <div>
         UserName:{" "}
         <input value={this.state.inputValue} onChange={this.onChange} />
-        <Select options={options} defaultValue={options[0]} />
+        <Select options={options} defaultValue={options[0]} isMulti />
         <DateFilter
           handleChangeStart={this.handleChangeStart}
           handleChangeEnd={this.handleChangeEnd}
