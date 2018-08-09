@@ -1,14 +1,44 @@
-import * as React from "react";
+import React from "react";
+import Comments from "./Comments";
 
-export class Article extends React.PureComponent {
+import "./Article.css";
+
+export default class Article extends React.PureComponent {
+  state = {
+    isCommentsOpen: false
+  };
+
+  toggleComments = () => {
+    const { isCommentsOpen } = this.state;
+    this.setState({ isCommentsOpen: !isCommentsOpen });
+  };
+
+  getContentNode() {
+    const { article } = this.props;
+    const { isCommentsOpen } = this.state;
+    const buttonTitle = isCommentsOpen ? "Hide comments" : "Show comments";
+
+    return (
+      <div>
+        <p>{article.text}</p>
+        {isCommentsOpen ? <Comments comments={article.comments} /> : null}
+        <button className="toggle-btn" onClick={this.toggleComments}>
+          {buttonTitle}
+        </button>
+      </div>
+    );
+  }
+
   render() {
-    console.log("R");
     const { article, isOpen } = this.props;
+    const buttonTitle = isOpen ? "Close" : "Open";
     return (
       <li>
         {article.title}
-        <button onClick={this.handleClick}>close</button>
-        {isOpen ? <p>{article.text}</p> : null}
+        <button className="toggle-btn" onClick={this.handleClick}>
+          {buttonTitle}
+        </button>
+        {isOpen ? this.getContentNode() : null}
       </li>
     );
   }
