@@ -11,9 +11,9 @@ export class Comment extends React.PureComponent {
           {comment.title}
           <button>open/close</button>
           <ul>
-            {comment.comments}
-            .foreach(function(
-            {params}) {<OneComment fd={params} />})
+            {comment.comments.map(article => (
+              <li key={article.id}> {article.text}</li>
+            ))}
           </ul>
           })
         </li>

@@ -77,9 +77,10 @@ export default class ArticleList extends React.Component {
         />
         <p>Comments</p>
         <ul>
-          {articles.map(article => (
-            <Comment key={article.id} comment={article} />
-          ))}
+          {articles.title}
+          {/* {articles.map(article => (
+            //<Comment key={article.id} comment={article} />
+          ))} */}
         </ul>
       </div>
     );
