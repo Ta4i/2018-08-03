@@ -1,6 +1,9 @@
-import * as React from "react";
+import React from "react";
 import Select from "react-select";
-import { Article } from "./Article";
+import Article from "./Article";
+import DateRange from "./DateRange";
+
+import "./ArticleList.css";
 
 export default class ArticleList extends React.Component {
   state = {
@@ -12,28 +15,34 @@ export default class ArticleList extends React.Component {
     const { articles } = this.props;
     return (
       <div>
-        UserName:{" "}
-        <input value={this.state.inputValue} onChange={this.onChange} />
-        <Select
-          value={{
-            value: articles[0].id,
-            label: articles[0].title
-          }}
-          options={articles.map(article => ({
-            value: article.id,
-            label: article.title
-          }))}
-        />
-        <ul>
-          {articles.map(article => (
-            <Article
-              key={article.id}
-              article={article}
-              isOpen={this.state.openArticleId === article.id}
-              toggleVisibility={this.toggleVisibility}
-            />
-          ))}
-        </ul>
+        <div className="row">
+          UserName:{" "}
+          <input value={this.state.inputValue} onChange={this.onChange} />
+        </div>
+        <div className="row">
+          <Select
+            options={articles.map(article => ({
+              value: article.id,
+              label: article.title
+            }))}
+            isMulti
+          />
+        </div>
+        <div className="row">
+          <DateRange />
+        </div>
+        <div className="row">
+          <ul>
+            {articles.map(article => (
+              <Article
+                key={article.id}
+                article={article}
+                isOpen={this.state.openArticleId === article.id}
+                toggleVisibility={this.toggleVisibility}
+              />
+            ))}
+          </ul>
+        </div>
       </div>
     );
   }
@@ -46,8 +55,14 @@ export default class ArticleList extends React.Component {
   };
 
   toggleVisibility = id => {
-    this.setState({
-      openArticleId: id
-    });
+    if (id === this.state.openArticleId) {
+      this.setState({
+        openArticleId: null
+      });
+    } else {
+      this.setState({
+        openArticleId: id
+      });
+    }
   };
 }
