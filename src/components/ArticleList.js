@@ -1,6 +1,6 @@
 import * as React from "react";
 import Select from "react-select";
-import { Article } from "./Article";
+import Article from "./Article";
 import DatePicker from "react-date-picker";
 import decorator from "./decorator";
 import TogglerController from "./TogglerController";
@@ -26,13 +26,13 @@ export default class ArticleList extends React.Component {
         UserName:{" "}
         <input
           name="first_name"
-          value={this.state.formValue["first_name"]}
+          value={this.state.formValue.first_name}
           placeholder="Имя"
           onChange={this.handleInputChange}
         />
         <input
           name="second_name"
-          value={this.state.formValue["second_name"]}
+          value={this.state.formValue.second_name}
           placeholder="Фамилия"
           onChange={this.handleInputChange}
         />
