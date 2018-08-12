@@ -16,7 +16,7 @@ describe('ArticleList', function() {
   it('should open a comments', function() {
     const wrapper = mount(<ArticleList articles={articles} />)
     wrapper.find('.open-article-0').simulate('click')
-    expect(wrapper.find('[data-automation-id="open-comments"]').length).toBe(1)
+    expect(wrapper.find('.open-comments').length).toBe(1)
   })
 
   it('should open a comments', function(done) {
@@ -28,5 +28,18 @@ describe('ArticleList', function() {
         }}
       />
     )
+  })
+
+  it('should open/close all article', function() {
+    const wrapper = mount(<ArticleList articles={articles} />)
+    let result = true
+    wrapper.find('.article').reduce((result, article, index) => {
+      wrapper.find(`.open-article-${index}`).simulate('click')
+      result = wrapper.find(`.text-${index}`).length === 1 && result
+      wrapper.find(`.open-article-${index}`).simulate('click')
+      result = wrapper.find(`.text-${index}`).length === 1 && result
+      return result
+    }, true)
+    expect(result).toBe(true)
   })
 })

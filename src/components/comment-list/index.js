@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
-import Comment from './comment'
-import toggleOpen from '../decorators/toggleOpen'
+import Comment from '../comment/index'
+import toggleOpen from '../../decorators/toggleOpen'
 import PropTypes from 'prop-types'
+import CSSTransitionGroup from 'react-addons-css-transition-group'
+import './comment-list.css'
 
 class CommentList extends Component {
   render() {
@@ -9,10 +11,16 @@ class CommentList extends Component {
     const text = isOpen ? 'hide comments' : 'show comments'
     return (
       <div>
-        <button data-automation-id="open-comments" onClick={toggleOpen}>
+        <button className={'open-comments'} onClick={toggleOpen}>
           {text}
         </button>
-        {this.getBody()}
+        <CSSTransitionGroup
+          transitionName="example"
+          transitionEnter={true}
+          transitionLeave={true}
+        >
+          {this.getBody()}
+        </CSSTransitionGroup>
       </div>
     )
   }

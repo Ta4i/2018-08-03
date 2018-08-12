@@ -1,7 +1,8 @@
 import React, { PureComponent } from 'react'
-import CommentList from './comment-list'
+import CommentList from '../comment-list/index'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import './article.css'
+import PropTypes from 'prop-types'
 
 class Article extends PureComponent {
   render() {
@@ -14,8 +15,8 @@ class Article extends PureComponent {
         </button>
         <ReactCSSTransitionGroup
           transitionName="example"
-          transitionEnterTimeout={5000}
-          transitionLeaveTimeout={5000}
+          transitionEnterTimeout={500}
+          transitionLeaveTimeout={500}
         >
           {this.getBody()}
         </ReactCSSTransitionGroup>
@@ -24,11 +25,11 @@ class Article extends PureComponent {
   }
 
   getBody() {
-    const { article, isOpen } = this.props
+    const { article, isOpen, index } = this.props
     if (!isOpen) return null
 
     return (
-      <section>
+      <section className={`text-${index}`}>
         {article.text}
         <CommentList comments={article.comments} />
       </section>
@@ -36,6 +37,12 @@ class Article extends PureComponent {
   }
 
   toggleOpen = () => this.props.toggleOpen(this.props.article.id)
+}
+
+Article.propTypes = {
+  article: PropTypes.object.isRequired,
+  isOpen: PropTypes.bool,
+  index: PropTypes.number
 }
 
 export default Article
