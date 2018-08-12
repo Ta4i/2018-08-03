@@ -14,8 +14,8 @@ class Article extends PureComponent {
         </button>
         <ReactCSSTransitionGroup
           transitionName="example"
-          transitionEnterTimeout={5000}
-          transitionLeaveTimeout={5000}
+          transitionEnterTimeout={2000}
+          transitionLeaveTimeout={2000}
         >
           {this.getBody()}
         </ReactCSSTransitionGroup>
