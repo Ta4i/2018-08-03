@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import Comment from './comment'
-import toggleOpen from '../decorators/toggleOpen'
+import Comment from './../comment'
+import toggleOpen from '../../decorators/toggleOpen'
 import PropTypes from 'prop-types'
 import ReactCSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
 import AnimateHeight from 'react-animate-height'

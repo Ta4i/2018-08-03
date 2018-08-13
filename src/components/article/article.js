@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import CommentList from './comment-list'
+import CommentList from '../comment-list'
 import ReactCSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
 import AnimateHeight from 'react-animate-height'
 import './article.css'
