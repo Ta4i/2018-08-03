@@ -2,12 +2,14 @@ import React, { PureComponent } from 'react'
 import CommentList from '../comment-list'
 import ReactCSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
 import AnimateHeight from 'react-animate-height'
+import animationParameters from './../../animation-parameters'
 import './article.css'
 
 class Article extends PureComponent {
+  static animationDuration = animationParameters.time.m
+
   render() {
     const { article, isOpen, index } = this.props
-    const animationDuration = 320
     return (
       <div className={'article'}>
         <h2>{article.title}</h2>
@@ -15,13 +17,13 @@ class Article extends PureComponent {
           {isOpen ? 'close' : 'open'}
         </button>
         <AnimateHeight
-          duration={animationDuration}
+          duration={Article.animationDuration}
           height={isOpen ? 'auto' : '0'}
         >
           <ReactCSSTransitionGroup
             transitionName="example"
-            transitionEnterTimeout={animationDuration}
-            transitionLeaveTimeout={animationDuration}
+            transitionEnterTimeout={Article.animationDuration}
+            transitionLeaveTimeout={Article.animationDuration}
           >
             {this.getBody()}
           </ReactCSSTransitionGroup>
