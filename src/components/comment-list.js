@@ -2,17 +2,32 @@ import React, { Component } from 'react'
 import Comment from './comment'
 import toggleOpen from '../decorators/toggleOpen'
 import PropTypes from 'prop-types'
+import ReactCSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
+import AnimateHeight from 'react-animate-height'
+import './comment-list.css'
 
 class CommentList extends Component {
   render() {
     const { isOpen, toggleOpen } = this.props
+    const animationDuration = 320
     const text = isOpen ? 'hide comments' : 'show comments'
     return (
       <div>
         <button data-automation-id="open-comments" onClick={toggleOpen}>
           {text}
         </button>
-        {this.getBody()}
+        <AnimateHeight
+          duration={animationDuration}
+          height={isOpen ? 'auto' : '0'}
+        >
+          <ReactCSSTransitionGroup
+            transitionName="example"
+            transitionEnterTimeout={animationDuration}
+            transitionLeaveTimeout={animationDuration}
+          >
+            {this.getBody()}
+          </ReactCSSTransitionGroup>
+        </AnimateHeight>
       </div>
     )
   }

@@ -1,24 +1,31 @@
 import React, { PureComponent } from 'react'
 import CommentList from './comment-list'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import ReactCSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
+import AnimateHeight from 'react-animate-height'
 import './article.css'
 
 class Article extends PureComponent {
   render() {
     const { article, isOpen, index } = this.props
+    const animationDuration = 320
     return (
       <div className={'article'}>
         <h2>{article.title}</h2>
         <button className={`open-article-${index}`} onClick={this.toggleOpen}>
           {isOpen ? 'close' : 'open'}
         </button>
-        <ReactCSSTransitionGroup
-          transitionName="example"
-          transitionEnterTimeout={5000}
-          transitionLeaveTimeout={5000}
+        <AnimateHeight
+          duration={animationDuration}
+          height={isOpen ? 'auto' : '0'}
         >
-          {this.getBody()}
-        </ReactCSSTransitionGroup>
+          <ReactCSSTransitionGroup
+            transitionName="example"
+            transitionEnterTimeout={animationDuration}
+            transitionLeaveTimeout={animationDuration}
+          >
+            {this.getBody()}
+          </ReactCSSTransitionGroup>
+        </AnimateHeight>
       </div>
     )
   }
