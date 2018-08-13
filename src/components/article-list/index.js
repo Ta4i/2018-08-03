@@ -1,5 +1,5 @@
 import React from 'react'
-import Article from '../article'
+import Article from '../Article'
 import accordion from '../../decorators/accordion'
 
 const ArticleList = (props) => {
