@@ -1,9 +1,8 @@
 import React from 'react'
 import CommentList from './'
-import Enzyme, { render, shallow, mount } from 'enzyme'
+import Enzyme, { mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import articles from '../../fixtures'
-import animationParameters from './../../animation-parameters'
 
 Enzyme.configure({ adapter: new Adapter() })
 

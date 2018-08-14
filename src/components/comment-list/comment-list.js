@@ -25,6 +25,7 @@ class CommentList extends Component {
         <AnimateHeight
           duration={CommentList.animationDuration}
           height={isOpen ? 'auto' : '0'}
+          easing={animationParameters.curve}
         >
           <ReactCSSTransitionGroup
             transitionName="example"

@@ -20,6 +20,7 @@ class Article extends PureComponent {
         <AnimateHeight
           duration={Article.animationDuration}
           height={isOpen ? 'auto' : '0'}
+          easing={animationParameters.curve}
         >
           <ReactCSSTransitionGroup
             transitionName="example"
