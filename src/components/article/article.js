@@ -3,6 +3,7 @@ import CommentList from '../comment-list'
 import ReactCSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
 import AnimateHeight from 'react-animate-height'
 import animationParameters from './../../animation-parameters'
+import PropTypes from 'prop-types'
 import './article.css'
 
 class Article extends PureComponent {
@@ -45,6 +46,24 @@ class Article extends PureComponent {
   }
 
   toggleOpen = () => this.props.toggleOpen(this.props.article.id)
+}
+
+Article.defaultProps = {
+  article: {
+    id: '',
+    text: '',
+    date: '',
+    title: '',
+    comments: []
+  },
+  index: -1
+}
+
+Article.propTypes = {
+  article: PropTypes.object.isRequired,
+  isOpen: PropTypes.bool,
+  toggleOpen: PropTypes.func,
+  index: PropTypes.number.isRequired
 }
 
 export default Article
