@@ -1,5 +1,6 @@
 import React from 'react'
 import ArticleList from './'
+import App from '../../App'
 import Enzyme, { mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import articles from '../../fixtures'
@@ -8,13 +9,13 @@ Enzyme.configure({ adapter: new Adapter() })
 
 describe('ArticleList', function() {
   it('should render all articles', function() {
-    const wrapper = mount(<ArticleList articles={articles} />)
+    const wrapper = mount(<App />)
 
     expect(wrapper.find('.article').length).toBe(7)
   })
 
   it('should open comments', function() {
-    const wrapper = mount(<ArticleList articles={articles} />)
+    const wrapper = mount(<App />)
     wrapper
       .find('.open-article')
       .at(0)
@@ -33,7 +34,7 @@ describe('ArticleList', function() {
   })
 
   it('should close comments', function() {
-    const wrapper = mount(<ArticleList articles={articles} />)
+    const wrapper = mount(<App />)
     wrapper
       .find('.open-article')
       .at(0)
