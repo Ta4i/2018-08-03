@@ -11,13 +11,9 @@ export const deleteArticle = (id) => ({
   }
 })
 
-export const changeDateRange = (new_date) => {
-  const result = {
-    type: CHANGE_FILTER_DATE,
-    payload: {
-      new_date: new_date
-    }
+export const changeDateRange = (dates) => ({
+  type: CHANGE_FILTER_DATE,
+  payload: {
+    new_date: dates
   }
-  console.dir(result)
-  return result
-}
+})

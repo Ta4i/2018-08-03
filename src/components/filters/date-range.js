@@ -23,19 +23,12 @@ class DateRange extends Component {
 
   handleDayClick = (day) => {
     const dateRange = DateUtils.addDayToRange(day, this.props)
-    if (dateRange && dateRange.from && !dateRange.to) {
-      dateRange.to = dateRange.from
-    }
-    console.log(dateRange)
     this.props.changeDateRange(dateRange)
   }
 }
 
 export default connect(
-  (state) => ({
-    from: state.date.from,
-    to: state.date.to
-  }),
+  (state) => state.date,
   (dispatch) => ({
     changeDateRange: (dateRange) => dispatch(changeDateRange(dateRange))
   })
