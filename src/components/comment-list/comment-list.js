@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import Comment from './comment'
-import toggleOpen from '../decorators/toggleOpen'
+import Comment from '../comment'
+import toggleOpen from '../../decorators/toggleOpen'
 import PropTypes from 'prop-types'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 class CommentList extends Component {
   render() {
@@ -12,7 +13,14 @@ class CommentList extends Component {
         <button data-automation-id="open-comments" onClick={toggleOpen}>
           {text}
         </button>
-        {this.getBody()}
+        <ReactCSSTransitionGroup
+          transitionName="example"
+          transitionEnterTimeout={500}
+          transitionLeaveTimeout={500}
+        >
+          {this.getBody()}
+        </ReactCSSTransitionGroup>
+        {/*{this.getBody()}*/}
       </div>
     )
   }
@@ -22,7 +30,7 @@ class CommentList extends Component {
     if (!isOpen) return null
 
     const body = comments.length ? (
-      <ul>
+      <ul className={'cl-ul'}>
         {comments.map((comment) => (
           <li key={comment.id}>
             <Comment comment={comment} />
