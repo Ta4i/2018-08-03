@@ -52,14 +52,14 @@ describe('ArticleList', function() {
     }, 100)
   })
 
-  it('should call fetchData', function(done) {
-    const wrapper = mount(
-      <ArticleList
-        articles={articles}
-        fetchData={() => {
-          done()
-        }}
-      />
-    )
-  })
+  // it('should call fetchData', function(done) {
+  //   const wrapper = mount(
+  //     <ArticleList
+  //       articles={articles}
+  //       fetchData={() => {
+  //         done()
+  //       }}
+  //     />
+  //   )
+  // })
 })
