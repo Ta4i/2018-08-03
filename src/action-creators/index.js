@@ -1,4 +1,4 @@
-import { INCREASE, DELETE_ARTICLE } from '../action-types'
+import { INCREASE, DELETE_ARTICLE, SELECT_ARTICLES } from '../action-types'
 
 export const count = () => ({
   type: INCREASE
@@ -9,4 +9,9 @@ export const deleteArticle = (id) => ({
   payload: {
     id
   }
+})
+
+export const selectArticles = (selected) => ({
+  type: SELECT_ARTICLES,
+  payload: selected
 })
