@@ -9,7 +9,7 @@ class CommentList extends Component {
     const { isOpen, toggleOpen } = this.props
     const text = isOpen ? 'hide comments' : 'show comments'
     return (
-      <div>
+      <div className={'CommentList'}>
         <button data-automation-id="open-comments" onClick={toggleOpen}>
           {text}
         </button>

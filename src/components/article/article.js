@@ -12,13 +12,13 @@ class Article extends PureComponent {
         <button className={`open-article-${index}`} onClick={this.toggleOpen}>
           {isOpen ? 'close' : 'open'}
         </button>
-        <ReactCSSTransitionGroup
+        {/*<ReactCSSTransitionGroup
           transitionName="example"
           transitionEnterTimeout={500}
           transitionLeaveTimeout={500}
         >
           {this.getBody()}
-        </ReactCSSTransitionGroup>
+        </ReactCSSTransitionGroup>*/}
       </div>
     )
   }
