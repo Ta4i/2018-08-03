@@ -1,20 +1,32 @@
-import { CHANGE_FILTER_DATE, CHANGE_FILTER_SELECT } from '../action-types'
+import {
+  CHANGE_DATE_RANGE,
+  CHANGE_SELECTION,
+  DELETE_ARTICLE
+} from '../action-types'
 
-const stateMock = {
-  date: {
+const defaultFilters = {
+  selected: [],
+  dateRange: {
     from: null,
     to: null
-  },
-  select: []
+  }
 }
 
-export default (state = stateMock, action) => {
-  switch (action.type) {
-    case CHANGE_FILTER_DATE:
-      return Object.assign({}, state, { date: action.payload.new_date })
-    case CHANGE_FILTER_SELECT:
-      return Object.assign({}, state, { select: action.payload.new_values })
+export default (filters = defaultFilters, action) => {
+  const { type, payload } = action
+  switch (type) {
+    case CHANGE_DATE_RANGE:
+      return { ...filters, dateRange: payload.dateRange }
+    case CHANGE_SELECTION:
+      return { ...filters, selected: payload.selected }
+    case DELETE_ARTICLE:
+      return {
+        ...filters,
+        selected: filters.selected.filter(
+          (selected) => selected.value !== payload.id
+        )
+      }
     default:
-      return state
+      return filters
   }
 }

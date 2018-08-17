@@ -1,9 +1,16 @@
 import React, { Component } from 'react'
 import Select from 'react-select'
 import { connect } from 'react-redux'
-import { changeSelect } from '../../action-creators'
+import PropTypes from 'prop-types'
+import { changeSelection } from '../../action-creators'
 
 class SelectFilter extends Component {
+  static propTypes = {
+    articles: PropTypes.array.isRequired,
+    selected: PropTypes.array,
+    changeSelection: PropTypes.func
+  }
+
   render() {
     return (
       <Select
@@ -15,7 +22,9 @@ class SelectFilter extends Component {
     )
   }
 
-  handleChange = (selected) => this.props.changeDateRange([...selected])
+  handleChange = (selected) => {
+    this.props.changeSelection(selected)
+  }
 
   get options() {
     return this.props.articles.map((article) => ({
@@ -27,10 +36,8 @@ class SelectFilter extends Component {
 
 export default connect(
   (state) => ({
-    select: state.filters.select,
+    selected: state.filters.selected,
     articles: state.articles
   }),
-  (dispatch) => ({
-    changeDateRange: (values) => dispatch(changeSelect(values))
-  })
+  { changeSelection }
 )(SelectFilter)
