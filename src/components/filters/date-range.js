@@ -28,7 +28,9 @@ class DateRange extends Component {
 }
 
 export default connect(
-  (state) => state.date,
+  (state) => {
+    return state.filters.date
+  },
   (dispatch) => ({
     changeDateRange: (dateRange) => dispatch(changeDateRange(dateRange))
   })
