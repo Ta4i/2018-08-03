@@ -15,7 +15,7 @@ class SelectFilter extends Component {
     )
   }
 
-  handleChange = (selected) => this.props.changeDateRange({ selected })
+  handleChange = (selected) => this.props.changeDateRange([...selected])
 
   get options() {
     return this.props.articles.map((article) => ({
@@ -27,7 +27,7 @@ class SelectFilter extends Component {
 
 export default connect(
   (state) => ({
-    select: state.select,
+    select: state.filters.select,
     articles: state.articles
   }),
   (dispatch) => ({
