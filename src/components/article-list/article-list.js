@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import Article from '../article'
 import accordion from '../../decorators/accordion'
 import PropTypes from 'prop-types'
+import filterArticles from './article-filter'
 
 const ArticleList = (props) => {
   props.fetchData && props.fetchData()
@@ -25,6 +26,8 @@ ArticleList.propTypes = {
   fetchData: PropTypes.func
 }
 
-export default connect((state) => ({ articles: state.articles }))(
-  accordion(ArticleList)
-)
+export default connect((state) => ({
+  articles: state.articles.filter((article) =>
+    filterArticles(article, state.filters)
+  )
+}))(accordion(ArticleList))
