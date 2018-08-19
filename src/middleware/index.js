@@ -7,14 +7,27 @@ export const logger = (store) => (next) => (action) => {
   console.log('after', store.getState())
 }
 
-// const makeId = count => {
-//   let result = ""
-//   let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
-//   for (let i = 0; i < count; i++) {
-//     result += possible.charAt(Math.floor(Math.random() * possible.length))
-//   }
-//   return result;
-// }
+// генератор id любой длинны
+const makeId = (length) => {
+  let result = ''
+  let possible =
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+  for (let i = 0; i < length; i++) {
+    result += possible.charAt(Math.floor(Math.random() * possible.length))
+  }
+  return result
+}
+
+// созаем рандомный id пока не попадется такой, которого нет. вероятность даже 2х вызовов близка к 0
+const genedateId = (targetObject, length) => {
+  let id
+  while (true) {
+    id = makeId(length)
+    if (!targetObject[id]) {
+      return id
+    }
+  }
+}
 
 export const generateId = (store) => (next) => (action) => {
   if (action.type === CREATE_COMMENT) {
@@ -23,9 +36,7 @@ export const generateId = (store) => (next) => (action) => {
 
     const actionWithId = {
       ...action,
-      id: Math.random()
-        .toString(36)
-        .slice(2)
+      id: genedateId(store.comments, 10)
     }
     next(actionWithId)
     console.log('after id generation', store.getState())
