@@ -41,7 +41,13 @@ class CommentList extends Component {
       <h3>No comments yet</h3>
     )
 
-    return <div>{body}</div>
+    return (
+      <div>
+        {body}
+        <input />
+        <button>add comment</button>
+      </div>
+    )
   }
 }
 
