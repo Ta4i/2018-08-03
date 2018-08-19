@@ -4,8 +4,14 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import Comment from './comment'
 import toggleOpen from '../../decorators/toggleOpen'
 import './comment-list.css'
+import { connect } from 'react-redux'
+import { createComment } from '../../action-creators'
 
 class CommentList extends Component {
+  state = {
+    commentField: ''
+  }
+
   render() {
     const { isOpen, toggleOpen } = this.props
     const text = isOpen ? 'hide comments' : 'show comments'
@@ -23,6 +29,16 @@ class CommentList extends Component {
         </ReactCSSTransitionGroup>
       </div>
     )
+  }
+
+  addComment = () => {
+    this.props.createComment(this.state.commentField, this.props.articleId)
+  }
+
+  handleCommentInput = (event) => {
+    this.setState({
+      commentField: event.target.value
+    })
   }
 
   getBody() {
@@ -44,8 +60,11 @@ class CommentList extends Component {
     return (
       <div>
         {body}
-        <input />
-        <button>add comment</button>
+        <input
+          value={this.state.commentField}
+          onChange={this.handleCommentInput}
+        />
+        <button onClick={this.addComment}>add comment</button>
       </div>
     )
   }
@@ -61,4 +80,10 @@ CommentList.propTypes = {
   toggleOpen: PropTypes.func
 }
 
-export default toggleOpen(CommentList)
+export default connect(
+  null,
+  (dispatch) => ({
+    createComment: (comment, articleId) =>
+      dispatch(createComment(comment, articleId))
+  })
+)(toggleOpen(CommentList))

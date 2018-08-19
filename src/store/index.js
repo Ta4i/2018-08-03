@@ -1,8 +1,8 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import reducer from '../reducer'
-import { logger } from '../middleware'
+import { logger, createComment } from '../middleware'
 
-const middleware = [logger]
+const middleware = [logger, createComment]
 
 const composeEnhancers =
   typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__

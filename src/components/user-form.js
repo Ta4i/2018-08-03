@@ -1,24 +1,25 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { changeUsername } from '../action-creators'
 
 class UserForm extends Component {
-  state = {
-    username: ''
-  }
-
   render() {
     return (
       <div>
         User:{' '}
-        <input value={this.state.username} onChange={this.handleUserChange} />
+        <input value={this.props.username} onChange={this.handleUserChange} />
       </div>
     )
   }
 
-  handleUserChange = (ev) => {
-    this.setState({
-      username: ev.target.value
-    })
-  }
+  handleUserChange = (event) => this.props.changeUsername(event.target.value)
 }
 
-export default UserForm
+export default connect(
+  (state) => ({
+    username: state.username
+  }),
+  (dispatch) => ({
+    changeUsername: (username) => dispatch(changeUsername(username))
+  })
+)(UserForm)
