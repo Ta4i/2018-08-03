@@ -4,7 +4,6 @@ const articlesSelector = (state) => state.articles
 const filtersSelector = (state) => state.filters
 const commentsSelector = (state) => state.comments
 const idSelector = (_, props) => props.id
-const usernameSelector = (state) => state
 
 export const filteredArticlesSelector = createSelector(
   articlesSelector,

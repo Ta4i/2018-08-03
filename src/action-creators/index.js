@@ -42,7 +42,6 @@ export function createComment(comment, articleId) {
 }
 
 export function changeUsername(username) {
-  console.dir(username)
   return {
     type: CHANGE_USERNAME,
     payload: {

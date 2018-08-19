@@ -35,15 +35,27 @@ export const createComment = (store) => (next) => (action) => {
     console.log('before id generation', store.getState())
     console.log('dispatch id generation', action)
 
+    const state = store.getState()
+    const username = state.username
+
+    if (username === '') {
+      alert('please enter username')
+      return
+    }
+    if (action.payload.comment === '') {
+      alert('please enter comment text')
+      return
+    }
+
     const actionWithId = {
       ...action,
-      id: genedateId(store.getState().comments, 10),
-      username: store.getState().username
+      id: genedateId(state.comments, 10),
+      username
     }
     next(actionWithId)
-    console.log('after id generation', store.getState())
+    console.log('after id generation', state)
     return
   }
 
-  return
+  next(action)
 }
