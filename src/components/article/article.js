@@ -1,16 +1,19 @@
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import CommentList from '../comment-list'
-import { deleteArticle } from '../../action-creators'
+import { addNewComment, deleteArticle } from '../../action-creators'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import './article.css'
+import moment from 'moment'
+import AddCommentForm from '../add-comment-form/add-comment-form'
 
-class Article extends PureComponent {
+class Article extends Component {
   render() {
     const { article, isOpen } = this.props
     return (
       <div className={'article'}>
         <h2>{article.title}</h2>
+        <div>published {moment(article.date).format('LL')}</div>
         <button className={'open-article'} onClick={this.toggleOpen}>
           {isOpen ? 'close' : 'open'}
         </button>
@@ -36,6 +39,10 @@ class Article extends PureComponent {
       <section>
         {article.text}
         <CommentList comments={article.comments} />
+        <AddCommentForm
+          addComment={this.props.addComment}
+          articleId={article.id}
+        />
       </section>
     )
   }
@@ -47,6 +54,8 @@ class Article extends PureComponent {
 export default connect(
   null,
   (dispatch) => ({
-    deleteArticle: (id) => dispatch(deleteArticle(id))
+    deleteArticle: (id) => dispatch(deleteArticle(id)),
+    addComment: (user, text, articleId) =>
+      dispatch(addNewComment(user, text, articleId))
   })
 )(Article)
