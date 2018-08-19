@@ -37,12 +37,13 @@ export const createComment = (store) => (next) => (action) => {
 
     const state = store.getState()
     const username = state.username
+    const comment = state.ownComments[action.payload.articleId] || ''
 
     if (username === '') {
       alert('please enter username')
       return
     }
-    if (action.payload.comment === '') {
+    if (comment === '') {
       alert('please enter comment text')
       return
     }
@@ -50,7 +51,8 @@ export const createComment = (store) => (next) => (action) => {
     const actionWithId = {
       ...action,
       id: genedateId(state.comments, 10),
-      username
+      username,
+      comment
     }
     next(actionWithId)
     console.log('after id generation', state)

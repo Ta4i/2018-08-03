@@ -22,7 +22,6 @@ export default (articles = defaultArticles, action) => {
         comments: [...articles[id].comments, action.id]
       }
       const articlesWithComment = { ...articles, [id]: newArticle }
-      // newArticle.comments = [ ...newArticle.comments, action.id ]
       return articlesWithComment
     default:
       return articles

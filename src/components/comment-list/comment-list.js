@@ -5,13 +5,9 @@ import Comment from './comment'
 import toggleOpen from '../../decorators/toggleOpen'
 import './comment-list.css'
 import { connect } from 'react-redux'
-import { createComment } from '../../action-creators'
+import { createComment, changeOwnComment } from '../../action-creators'
 
 class CommentList extends Component {
-  state = {
-    commentField: ''
-  }
-
   render() {
     const { isOpen, toggleOpen } = this.props
     const text = isOpen ? 'hide comments' : 'show comments'
@@ -32,13 +28,11 @@ class CommentList extends Component {
   }
 
   addComment = () => {
-    this.props.createComment(this.state.commentField, this.props.articleId)
+    this.props.createComment(this.props.articleId)
   }
 
   handleCommentInput = (event) => {
-    this.setState({
-      commentField: event.target.value
-    })
+    this.props.changeOwnComment(event.target.value, this.props.articleId)
   }
 
   getBody() {
@@ -60,10 +54,7 @@ class CommentList extends Component {
     return (
       <div>
         {body}
-        <input
-          value={this.state.commentField}
-          onChange={this.handleCommentInput}
-        />
+        <input value={this.props.comment} onChange={this.handleCommentInput} />
         <button onClick={this.addComment}>add comment</button>
       </div>
     )
@@ -81,9 +72,12 @@ CommentList.propTypes = {
 }
 
 export default connect(
-  null,
+  (state, ownProps) => ({
+    comment: state.ownComments[ownProps.articleId] || ''
+  }),
   (dispatch) => ({
-    createComment: (comment, articleId) =>
-      dispatch(createComment(comment, articleId))
+    createComment: (articleId) => dispatch(createComment(articleId)),
+    changeOwnComment: (comment, articleId) =>
+      dispatch(changeOwnComment(comment, articleId))
   })
 )(toggleOpen(CommentList))

@@ -4,7 +4,8 @@ import {
   CHANGE_DATE_RANGE,
   CHANGE_SELECTION,
   CREATE_COMMENT,
-  CHANGE_USERNAME
+  CHANGE_USERNAME,
+  CHANGE_OWN_COMMENT
 } from '../action-types'
 
 export const count = () => ({
@@ -31,9 +32,18 @@ export function changeSelection(selected) {
   }
 }
 
-export function createComment(comment, articleId) {
+export function createComment(articleId) {
   return {
     type: CREATE_COMMENT,
+    payload: {
+      articleId
+    }
+  }
+}
+
+export function changeOwnComment(comment, articleId) {
+  return {
+    type: CHANGE_OWN_COMMENT,
     payload: {
       comment,
       articleId
