@@ -29,6 +29,7 @@ const genedateId = (targetObject, length) => {
   }
 }
 
+// можно было сделать без произвольной длинны и проверок так: Math.random().toString(36).slice(2)
 export const generateId = (store) => (next) => (action) => {
   if (action.type === CREATE_COMMENT) {
     console.log('before id generation', store.getState())
