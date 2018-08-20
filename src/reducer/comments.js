@@ -1,4 +1,5 @@
 import { normalizedComments } from '../fixtures'
+import { CREATE_COMMENT } from '../action-types'
 
 const defaultComments = normalizedComments.reduce(
   (res, comment) => ({
@@ -9,7 +10,18 @@ const defaultComments = normalizedComments.reduce(
 )
 
 export default (comments = defaultComments, action) => {
-  switch (action.type) {
+  const { type, id, username, comment } = action
+
+  switch (type) {
+    case CREATE_COMMENT:
+      return {
+        ...comments,
+        [id]: {
+          id: id,
+          user: username,
+          text: comment
+        }
+      }
     default:
       return comments
   }
