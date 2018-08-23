@@ -12,3 +12,5 @@ export const LOAD_ALL_ARTICLES = 'LOAD_ALL_ARTICLES'
 export const START = '_START'
 export const SUCCES = '_SUCCES'
 export const FAIL = '_FAIL'
+
+export const LOAD_ARTICLE_TEXT = 'LOAD_ARTICLE_TEXT'

@@ -28,5 +28,5 @@ export default (store) => (next) => (action) => {
           error
         })
       )
-  }, 1000)
+  }, 500)
 }

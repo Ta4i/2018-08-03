@@ -4,7 +4,8 @@ import {
   LOAD_ALL_ARTICLES,
   START,
   SUCCES,
-  FAIL
+  FAIL,
+  LOAD_ARTICLE_TEXT
 } from '../action-types'
 import { arrToMap } from './utils'
 import { Record } from 'immutable'
@@ -48,6 +49,13 @@ export default (articles = new ReducerRecord(), action) => {
         .set('error', error)
         .set('loading', false)
         .set('loaded', true)
+    case LOAD_ARTICLE_TEXT + SUCCES:
+      return articles.setIn(
+        ['entities', payload.articleId, 'text'],
+        responce.text
+      )
+    case LOAD_ARTICLE_TEXT + FAIL:
+      return articles.set('error', error)
     default:
       return articles
   }

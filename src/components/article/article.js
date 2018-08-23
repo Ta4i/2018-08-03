@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import CommentList from '../comment-list'
-import { deleteArticle } from '../../action-creators'
+import { deleteArticle, loadArticleText } from '../../action-creators'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import './article.css'
 
@@ -40,13 +40,21 @@ class Article extends PureComponent {
     )
   }
 
-  toggleOpen = () => this.props.toggleOpen(this.props.article.id)
+  toggleOpen = () => {
+    if (!this.props.isOpen) {
+      console.log('fetch after opening')
+      this.props.fetchData && this.props.fetchData(this.props.article.id)
+    }
+    this.props.toggleOpen(this.props.article.id)
+  }
+
   deleteArticle = () => this.props.deleteArticle(this.props.article.id)
 }
 
 export default connect(
   null,
   (dispatch) => ({
-    deleteArticle: (id) => dispatch(deleteArticle(id))
+    deleteArticle: (id) => dispatch(deleteArticle(id)),
+    fetchData: (id) => dispatch(loadArticleText(id))
   })
 )(Article)

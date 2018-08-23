@@ -4,7 +4,8 @@ import {
   CHANGE_DATE_RANGE,
   CHANGE_SELECTION,
   ADD_COMMENT,
-  LOAD_ALL_ARTICLES
+  LOAD_ALL_ARTICLES,
+  LOAD_ARTICLE_TEXT
 } from '../action-types'
 
 export const count = () => ({
@@ -43,5 +44,15 @@ export function loadAllArticles() {
   return {
     type: LOAD_ALL_ARTICLES,
     callAPI: '/api/article'
+  }
+}
+
+export function loadArticleText(articleId) {
+  return {
+    type: LOAD_ARTICLE_TEXT,
+    payload: {
+      articleId
+    },
+    callAPI: `/api/article/${articleId}`
   }
 }
