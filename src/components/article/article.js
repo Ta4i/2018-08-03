@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import CommentList from '../comment-list'
 import { deleteArticle, loadArticleText } from '../../action-creators'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import Loader from '../common/loader'
 import './article.css'
 
 class Article extends PureComponent {
@@ -34,7 +35,7 @@ class Article extends PureComponent {
 
     return (
       <section>
-        {article.text}
+        {article.text.loaded ? article.text.entities.text : <Loader />}
         <CommentList article={article} />
       </section>
     )

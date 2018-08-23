@@ -7,25 +7,31 @@ import {
   FAIL,
   LOAD_ARTICLE_TEXT
 } from '../action-types'
-import { arrToMap } from './utils'
+import {
+  arrToMap,
+  ReducerRecord,
+  createReducerRecord,
+  updateReducerRecord
+} from './utils'
 import { Record } from 'immutable'
+
+const ArticleTextModel = new Record({
+  text: null
+})
+
+const ArticleTextReducer = ReducerRecord(ArticleTextModel)
 
 const ArticleModel = new Record({
   id: null,
   title: null,
-  text: null,
+  text: new ArticleTextReducer(),
   date: null,
   comments: []
 })
 
-const ReducerRecord = Record({
-  entities: arrToMap([], ArticleModel),
-  loading: false,
-  loaded: false,
-  error: null
-})
+const ArticleListReducer = ReducerRecord(ArticleModel)
 
-export default (articles = new ReducerRecord(), action) => {
+export default (articles = new ArticleListReducer(), action) => {
   const { type, payload, randomId, responce, error } = action
 
   switch (type) {
@@ -49,10 +55,18 @@ export default (articles = new ReducerRecord(), action) => {
         .set('error', error)
         .set('loading', false)
         .set('loaded', true)
-    case LOAD_ARTICLE_TEXT + SUCCES:
+    case LOAD_ARTICLE_TEXT + START:
       return articles.setIn(
         ['entities', payload.articleId, 'text'],
-        responce.text
+        createReducerRecord(ArticleTextModel, START)
+      )
+    case LOAD_ARTICLE_TEXT + SUCCES:
+      return articles.updateIn(
+        ['entities', payload.articleId, 'text'],
+        (record) =>
+          updateReducerRecord(record, SUCCES, ArticleTextModel, {
+            text: responce.text
+          })
       )
     case LOAD_ARTICLE_TEXT + FAIL:
       return articles.set('error', error)

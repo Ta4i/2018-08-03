@@ -18,10 +18,13 @@ class ArticleList extends React.PureComponent {
 
   render() {
     const {
-      articles: { articles, loading },
+      articles: { articles },
+      loading,
       openItemId,
       toggleOpenItem
     } = this.props
+
+    console.log('props ————— ', this.props)
 
     if (loading) return <Loader />
 
