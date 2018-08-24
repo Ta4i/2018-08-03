@@ -7,26 +7,19 @@ import {
   FAIL,
   LOAD_ARTICLE_TEXT
 } from '../action-types'
-import {
-  arrToMap,
-  ReducerRecord,
-  createReducerRecord,
-  updateReducerRecord
-} from './utils'
+
+import { arrToMap, loadingModel, ReducerRecord } from './utils'
+
 import { Record } from 'immutable'
 
-const ArticleTextModel = new Record({
-  text: null
-})
-
-const ArticleTextReducer = ReducerRecord(ArticleTextModel)
+const ArticleTextModel = new Record(loadingModel)
 
 const ArticleModel = new Record({
   id: null,
   title: null,
-  text: new ArticleTextReducer(),
   date: null,
-  comments: []
+  comments: [],
+  text: new ArticleTextModel()
 })
 
 const ArticleListReducer = ReducerRecord(ArticleModel)
@@ -56,20 +49,27 @@ export default (articles = new ArticleListReducer(), action) => {
         .set('loading', false)
         .set('loaded', true)
     case LOAD_ARTICLE_TEXT + START:
+      console.log(
+        action,
+        articles.getIn(['entities', payload.articleId, 'text'])
+      )
       return articles.setIn(
-        ['entities', payload.articleId, 'text'],
-        createReducerRecord(ArticleTextModel, START)
+        ['entities', payload.articleId, 'text', 'loading'],
+        true
       )
     case LOAD_ARTICLE_TEXT + SUCCES:
-      return articles.updateIn(
-        ['entities', payload.articleId, 'text'],
-        (record) =>
-          updateReducerRecord(record, SUCCES, ArticleTextModel, {
-            text: responce.text
-          })
-      )
+      return articles
+        .setIn(['entities', payload.articleId, 'text', 'loading'], false)
+        .setIn(['entities', payload.articleId, 'text', 'loaded'], true)
+        .setIn(
+          ['entities', payload.articleId, 'text', 'entities'],
+          responce.text
+        )
     case LOAD_ARTICLE_TEXT + FAIL:
-      return articles.set('error', error)
+      return articles.setIn(
+        ['entities', payload.articleId, 'text', 'error'],
+        error
+      )
     default:
       return articles
   }

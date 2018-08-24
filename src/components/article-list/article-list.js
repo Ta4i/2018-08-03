@@ -24,8 +24,6 @@ class ArticleList extends React.PureComponent {
       toggleOpenItem
     } = this.props
 
-    console.log('props ————— ', this.props)
-
     if (loading) return <Loader />
 
     const articleElements = articles.map((article, index) => (

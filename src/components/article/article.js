@@ -35,7 +35,7 @@ class Article extends PureComponent {
 
     return (
       <section>
-        {article.text.loaded ? article.text.entities.text : <Loader />}
+        {article.text.loaded ? article.text.entities : <Loader />}
         <CommentList article={article} />
       </section>
     )

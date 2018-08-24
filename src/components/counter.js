@@ -24,13 +24,9 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    increase: () => {
-      dispatch(count())
-    }
-  }
-}
+const mapDispatchToProps = (dispatch) => ({
+  increase: () => dispatch(count())
+})
 
 export default connect(
   mapStateToProps,
