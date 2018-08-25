@@ -2,6 +2,7 @@ import {
   DELETE_ARTICLE,
   ADD_COMMENT,
   LOAD_ALL_ARTICLES,
+  LOAD_COMMENTS,
   START,
   SUCCES,
   FAIL,
@@ -19,6 +20,7 @@ const ArticleModel = new Record({
   title: null,
   date: null,
   comments: [],
+  isCommentsLoaded: null,
   text: new ArticleTextModel()
 })
 
@@ -46,6 +48,7 @@ export default (articles = new ArticleListReducer(), action) => {
     case LOAD_ALL_ARTICLES + FAIL:
       return articles
         .set('error', error)
+        .setIn(['entities', payload.articleId, 'isCommentsLoaded'], false)
         .set('loading', false)
         .set('loaded', false)
     case LOAD_ARTICLE_TEXT + START:
@@ -65,6 +68,21 @@ export default (articles = new ArticleListReducer(), action) => {
       return articles.setIn(
         ['entities', payload.articleId, 'text', 'error'],
         error
+      )
+    case LOAD_COMMENTS + START:
+      return articles.setIn(
+        ['entities', payload.articleId, 'isCommentsLoaded'],
+        false
+      )
+    case LOAD_COMMENTS + SUCCES:
+      return articles.setIn(
+        ['entities', payload.articleId, 'isCommentsLoaded'],
+        true
+      )
+    case LOAD_COMMENTS + FAIL:
+      return articles.setIn(
+        ['entities', payload.articleId, 'isCommentsLoaded'],
+        false
       )
     default:
       return articles

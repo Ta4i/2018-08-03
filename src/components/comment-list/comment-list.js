@@ -29,9 +29,11 @@ class CommentList extends Component {
   }
 
   handleClick = () => {
-    const { articleId, comments, fetchData, toggleOpen } = this.props
-    fetchData(articleId, comments)
-    toggleOpen()
+    if (!this.props.isLoaded) {
+      const { articleId, comments, fetchData } = this.props
+      fetchData(articleId, comments)
+    }
+    this.props.toggleOpen()
   }
 
   getBody() {
@@ -65,13 +67,18 @@ CommentList.defaultProps = {
 }
 
 CommentList.propTypes = {
-  article: PropTypes.object.isRequired,
+  articleId: PropTypes.string.isRequired,
+  comments: PropTypes.array.isRequired,
   isOpen: PropTypes.bool,
   toggleOpen: PropTypes.func
 }
 
 export default connect(
-  null,
+  (state, ownProps) => {
+    return {
+      isLoaded: state.articles.entities.get(ownProps.articleId).isCommentsLoaded
+    }
+  },
   (dispatch) => ({
     fetchData: (articleId, comments) =>
       dispatch(loadComments(articleId, comments))

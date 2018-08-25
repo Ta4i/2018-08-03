@@ -17,12 +17,7 @@ class ArticleList extends React.PureComponent {
   }
 
   render() {
-    const {
-      articles: { articles },
-      loading,
-      openItemId,
-      toggleOpenItem
-    } = this.props
+    const { articles, loading, openItemId, toggleOpenItem } = this.props
 
     if (loading) return <Loader />
 

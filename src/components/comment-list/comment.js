@@ -5,6 +5,9 @@ import { createCommentSelector } from '../../selectors'
 
 class Comment extends PureComponent {
   render() {
+    if (!this.props.comment) {
+      return null
+    }
     const { loaded } = this.props.comment
     return loaded ? this.getBody() : <Loader />
   }
