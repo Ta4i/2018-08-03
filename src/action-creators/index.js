@@ -5,7 +5,8 @@ import {
   CHANGE_SELECTION,
   ADD_COMMENT,
   LOAD_ALL_ARTICLES,
-  LOAD_ARTICLE_TEXT
+  LOAD_ARTICLE_TEXT,
+  LOAD_COMMENTS
 } from '../action-types'
 
 export const count = () => ({
@@ -54,5 +55,15 @@ export function loadArticleText(articleId) {
       articleId
     },
     callAPI: `/api/article/${articleId}`
+  }
+}
+
+export function loadComments(articleId, comments) {
+  return {
+    type: LOAD_COMMENTS,
+    callAPI: `/api/comment?article=${articleId}`,
+    payload: {
+      comments
+    }
   }
 }

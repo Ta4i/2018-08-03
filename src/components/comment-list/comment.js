@@ -1,13 +1,24 @@
-import React from 'react'
+import React, { PureComponent } from 'react'
+import Loader from '../common/loader'
 import { connect } from 'react-redux'
 import { createCommentSelector } from '../../selectors'
 
-function Comment({ commentProp }) {
-  return (
-    <div>
-      {commentProp.text} <b>by {commentProp.user}</b>
-    </div>
-  )
+class Comment extends PureComponent {
+  render() {
+    const { loaded } = this.props.comment
+    return loaded ? this.getBody() : <Loader />
+  }
+  getBody() {
+    const {
+      entities: { user, text }
+    } = this.props.comment
+    return (
+      <React.Fragment>
+        {text}
+        <b> by {user}</b>
+      </React.Fragment>
+    )
+  }
 }
 
 const createMapsToProps = () => {

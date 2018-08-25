@@ -36,17 +36,18 @@ class Article extends PureComponent {
     return (
       <section>
         {article.text.loaded ? article.text.entities : <Loader />}
-        <CommentList article={article} />
+        <CommentList articleId={article.id} comments={article.comments} />
       </section>
     )
   }
 
   toggleOpen = () => {
-    if (!this.props.isOpen) {
+    const { article, isOpen, fetchData, toggleOpen } = this.props
+    if (!isOpen) {
       console.log('fetch after opening')
-      this.props.fetchData && this.props.fetchData(this.props.article.id)
+      fetchData && fetchData(article.id)
     }
-    this.props.toggleOpen(this.props.article.id)
+    toggleOpen(article.id)
   }
 
   deleteArticle = () => this.props.deleteArticle(this.props.article.id)

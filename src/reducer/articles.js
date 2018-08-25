@@ -8,7 +8,7 @@ import {
   LOAD_ARTICLE_TEXT
 } from '../action-types'
 
-import { arrToMap, loadingModel, ReducerRecord } from './utils'
+import { arrToOrderedMap, loadingModel, ReducerRecord } from './utils'
 
 import { Record } from 'immutable'
 
@@ -40,19 +40,15 @@ export default (articles = new ArticleListReducer(), action) => {
       return articles.set('loading', true)
     case LOAD_ALL_ARTICLES + SUCCES:
       return articles
-        .set('entities', arrToMap(responce, ArticleModel))
+        .set('entities', arrToOrderedMap(responce, ArticleModel))
         .set('loading', false)
         .set('loaded', true)
     case LOAD_ALL_ARTICLES + FAIL:
       return articles
         .set('error', error)
         .set('loading', false)
-        .set('loaded', true)
+        .set('loaded', false)
     case LOAD_ARTICLE_TEXT + START:
-      console.log(
-        action,
-        articles.getIn(['entities', payload.articleId, 'text'])
-      )
       return articles.setIn(
         ['entities', payload.articleId, 'text', 'loading'],
         true

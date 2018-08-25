@@ -45,7 +45,7 @@ export const createCommentSelector = () => {
     console.log('--- connect Comment', comments.get(id))
 
     return {
-      commentProp: comments.get(id)
+      comment: comments.get(id)
     }
   })
 }

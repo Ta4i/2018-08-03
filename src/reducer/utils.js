@@ -1,4 +1,4 @@
-import { OrderedMap, Record } from 'immutable'
+import { OrderedMap, Map, Record } from 'immutable'
 
 export const loadingModel = {
   loading: null,
@@ -7,16 +7,23 @@ export const loadingModel = {
   entities: null
 }
 
-export function arrToMap(arr, Record) {
+export function arrToOrderedMap(arr, Record) {
   return arr.reduce(
     (acc, item) => acc.set(item.id, (Record && new Record(item)) || item),
     new OrderedMap({})
   )
 }
 
+export function arrToMap(arr, Record) {
+  return arr.reduce(
+    (acc, item) => acc.set(item.id, (Record && new Record(item)) || item),
+    new Map({})
+  )
+}
+
 export function ReducerRecord(model) {
   return Record({
     ...loadingModel,
-    entities: arrToMap([], model)
+    entities: arrToOrderedMap([], model)
   })
 }
