@@ -64,7 +64,9 @@ export default (comments = new Map(), action) => {
     case ADD_COMMENT:
       console.log('REDUCER COMMENT', payload)
       return comments.set(randomId, {
-        ...loadingModel,
+        loading: false,
+        loaded: true,
+        error: null,
         entities: {
           ...payload.comment
         }

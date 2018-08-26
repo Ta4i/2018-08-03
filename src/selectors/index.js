@@ -1,8 +1,7 @@
 import { createSelector } from 'reselect'
 
 const filtersSelector = (state) => state.filters
-const commentsSelector = (state) => state.comments
-const idSelector = (_, props) => props.id
+const commentByIdSelector = (state, props) => state.comments.get(props.id)
 
 export const articlesMapSelector = (state) => state.articles.entities
 
@@ -40,11 +39,11 @@ export const filteredArticlesSelector = createSelector(
 export const createCommentSelector = () => {
   console.log('--- connect Comment')
 
-  return createSelector(commentsSelector, idSelector, (comments, id) => {
-    console.log('--- connect Comment', comments.get(id))
+  return createSelector(commentByIdSelector, (comment) => {
+    console.log('--- connect Comment', comment)
 
     return {
-      comment: comments.get(id)
+      comment
     }
   })
 }
