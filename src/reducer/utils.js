@@ -1,29 +1,26 @@
-import { OrderedMap, Map, Record } from 'immutable'
+import { OrderedMap, Record } from 'immutable'
 
 export const loadingModel = {
   loading: null,
   loaded: null,
-  error: null,
+  error: null
+}
+
+export const loadingWithContentModel = {
+  ...loadingModel,
   entities: null
 }
 
-export function arrToOrderedMap(arr, Record) {
+export function arrToMap(arr, Record) {
   return arr.reduce(
     (acc, item) => acc.set(item.id, (Record && new Record(item)) || item),
     new OrderedMap({})
   )
 }
 
-export function arrToMap(arr, Record) {
-  return arr.reduce(
-    (acc, item) => acc.set(item.id, (Record && new Record(item)) || item),
-    new Map({})
-  )
-}
-
 export function ReducerRecord(model) {
   return Record({
     ...loadingModel,
-    entities: arrToOrderedMap([], model)
+    entities: arrToMap([], model)
   })
 }

@@ -6,11 +6,11 @@ import {
   FAIL
 } from '../action-types'
 
-import { loadingModel } from './utils'
+import { loadingWithContentModel } from './utils'
 import { Record, Map } from 'immutable'
 
 const CommentModel = new Record({
-  ...loadingModel,
+  ...loadingWithContentModel,
   entities: {
     id: null,
     user: null,

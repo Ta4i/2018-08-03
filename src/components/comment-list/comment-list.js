@@ -76,7 +76,8 @@ CommentList.propTypes = {
 export default connect(
   (state, ownProps) => {
     return {
-      isLoaded: state.articles.entities.get(ownProps.articleId).isCommentsLoaded
+      isLoaded: state.articles.entities.get(ownProps.articleId)
+        .commentsLoadingStatus.loaded
     }
   },
   (dispatch) => ({

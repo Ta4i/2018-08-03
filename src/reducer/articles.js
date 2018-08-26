@@ -9,18 +9,24 @@ import {
   LOAD_ARTICLE_TEXT
 } from '../action-types'
 
-import { arrToOrderedMap, loadingModel, ReducerRecord } from './utils'
+import {
+  arrToMap,
+  loadingModel,
+  loadingWithContentModel,
+  ReducerRecord
+} from './utils'
 
 import { Record } from 'immutable'
 
-const ArticleTextModel = new Record(loadingModel)
+const ArticleTextModel = new Record(loadingWithContentModel)
+const ArticleCommentsLoadingModel = new Record(loadingModel)
 
 const ArticleModel = new Record({
   id: null,
   title: null,
   date: null,
   comments: [],
-  isCommentsLoaded: null,
+  commentsLoadingStatus: new ArticleCommentsLoadingModel(),
   text: new ArticleTextModel()
 })
 
@@ -42,13 +48,12 @@ export default (articles = new ArticleListReducer(), action) => {
       return articles.set('loading', true)
     case LOAD_ALL_ARTICLES + SUCCES:
       return articles
-        .set('entities', arrToOrderedMap(responce, ArticleModel))
+        .set('entities', arrToMap(responce, ArticleModel))
         .set('loading', false)
         .set('loaded', true)
     case LOAD_ALL_ARTICLES + FAIL:
       return articles
         .set('error', error)
-        .setIn(['entities', payload.articleId, 'isCommentsLoaded'], false)
         .set('loading', false)
         .set('loaded', false)
     case LOAD_ARTICLE_TEXT + START:
@@ -71,19 +76,29 @@ export default (articles = new ArticleListReducer(), action) => {
       )
     case LOAD_COMMENTS + START:
       return articles.setIn(
-        ['entities', payload.articleId, 'isCommentsLoaded'],
-        false
-      )
-    case LOAD_COMMENTS + SUCCES:
-      return articles.setIn(
-        ['entities', payload.articleId, 'isCommentsLoaded'],
+        ['entities', payload.articleId, 'commentsLoadingStatus', 'loading'],
         true
       )
+    case LOAD_COMMENTS + SUCCES:
+      return articles
+        .setIn(
+          ['entities', payload.articleId, 'commentsLoadingStatus', 'loading'],
+          false
+        )
+        .setIn(
+          ['entities', payload.articleId, 'commentsLoadingStatus', 'loaded'],
+          true
+        )
     case LOAD_COMMENTS + FAIL:
-      return articles.setIn(
-        ['entities', payload.articleId, 'isCommentsLoaded'],
-        false
-      )
+      return articles
+        .setIn(
+          ['entities', payload.articleId, 'commentsLoadingStatus', 'loading'],
+          false
+        )
+        .setIn(
+          ['entities', payload.articleId, 'commentsLoadingStatus', 'loaded'],
+          false
+        )
     default:
       return articles
   }
