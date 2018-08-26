@@ -1,9 +1,10 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import CommentList from '../comment-list'
-import { deleteArticle } from '../../action-creators'
+import { deleteArticle, loadArticleText } from '../../action-creators'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import './article.css'
+import Loader from '../common/loader'
 
 class Article extends PureComponent {
   render() {
@@ -32,10 +33,20 @@ class Article extends PureComponent {
     const { article, isOpen } = this.props
     if (!isOpen) return null
 
+    if (article.loading) return <Loader />
+
+    if (!article.loaded) {
+      this.props.fetchData(article.id)
+      return null
+    }
+
     return (
       <section>
         {article.text}
-        <CommentList article={article} />
+        <CommentList
+          commentsIdList={article.comments || []}
+          articleId={article.id}
+        />
       </section>
     )
   }
@@ -47,6 +58,7 @@ class Article extends PureComponent {
 export default connect(
   null,
   (dispatch) => ({
-    deleteArticle: (id) => dispatch(deleteArticle(id))
+    deleteArticle: (id) => dispatch(deleteArticle(id)),
+    fetchData: (id) => dispatch(loadArticleText(id))
   })
 )(Article)
