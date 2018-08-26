@@ -49,3 +49,6 @@ export const createCommentSelector = () => {
 }
 
 export const loadingArticleSelector = (state) => state.articles.loading
+
+export const isCommentsLoading = (state, props) =>
+  state.articles.entities.get(props.articleId).commentsLoadingStatus.loaded

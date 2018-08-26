@@ -5,6 +5,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import Comment from './comment'
 import CommentForm from '../comment-form'
 import toggleOpen from '../../decorators/toggleOpen'
+import { isCommentsLoading } from '../../selectors'
 import { loadComments } from '../../action-creators'
 import './comment-list.css'
 
@@ -76,8 +77,7 @@ CommentList.propTypes = {
 export default connect(
   (state, ownProps) => {
     return {
-      isLoaded: state.articles.entities.get(ownProps.articleId)
-        .commentsLoadingStatus.loaded
+      isLoaded: isCommentsLoading(state, ownProps)
     }
   },
   (dispatch) => ({
