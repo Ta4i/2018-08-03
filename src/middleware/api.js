@@ -3,7 +3,11 @@ import { START, SUCCES, FAIL } from '../action-types'
 export default (store) => (next) => (action) => {
   const { callAPI, type, ...rest } = action
 
-  if (!callAPI) return next(rest)
+  if (!callAPI)
+    return next({
+      type,
+      ...rest
+    })
 
   next({
     type: type + START,
@@ -28,5 +32,5 @@ export default (store) => (next) => (action) => {
           error
         })
       )
-  }, 1000)
+  }, 500)
 }

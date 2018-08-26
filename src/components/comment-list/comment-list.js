@@ -1,18 +1,21 @@
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import React, { Component } from 'react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import Comment from './comment'
 import CommentForm from '../comment-form'
 import toggleOpen from '../../decorators/toggleOpen'
+import { isCommentsLoading } from '../../selectors'
+import { loadComments } from '../../action-creators'
 import './comment-list.css'
 
 class CommentList extends Component {
   render() {
-    const { isOpen, toggleOpen } = this.props
+    const { isOpen } = this.props
     const text = isOpen ? 'hide comments' : 'show comments'
     return (
       <div>
-        <button data-automation-id="open-comments" onClick={toggleOpen}>
+        <button data-automation-id="open-comments" onClick={this.handleClick}>
           {text}
         </button>
         <ReactCSSTransitionGroup
@@ -26,11 +29,16 @@ class CommentList extends Component {
     )
   }
 
+  handleClick = () => {
+    if (!this.props.isLoaded) {
+      const { articleId, comments, fetchData } = this.props
+      fetchData(articleId, comments)
+    }
+    this.props.toggleOpen()
+  }
+
   getBody() {
-    const {
-      article: { comments = [], id },
-      isOpen
-    } = this.props
+    const { comments = [], articleId, isOpen } = this.props
 
     if (!isOpen) return null
     console.log('comments', comments)
@@ -49,7 +57,7 @@ class CommentList extends Component {
     return (
       <div>
         {body}
-        <CommentForm articleId={id} />
+        <CommentForm articleId={articleId} />
       </div>
     )
   }
@@ -60,9 +68,20 @@ CommentList.defaultProps = {
 }
 
 CommentList.propTypes = {
-  article: PropTypes.object.isRequired,
+  articleId: PropTypes.string.isRequired,
+  comments: PropTypes.array.isRequired,
   isOpen: PropTypes.bool,
   toggleOpen: PropTypes.func
 }
 
-export default toggleOpen(CommentList)
+export default connect(
+  (state, ownProps) => {
+    return {
+      isLoaded: isCommentsLoading(state, ownProps)
+    }
+  },
+  (dispatch) => ({
+    fetchData: (articleId, comments) =>
+      dispatch(loadComments(articleId, comments))
+  })
+)(toggleOpen(CommentList))
