@@ -23,9 +23,8 @@ class CommentsPagination extends Component {
   render() {
     const { total, page } = this.props
     if (!total) return <Loader />
-    if (page > total / 5 + 1) {
+    if (page > total / 5 + 1)
       return <Redirect to={`/comments/${Math.floor(total / 5) + 1}`} />
-    }
     return (
       <div>
         {this.getCommentItems()}

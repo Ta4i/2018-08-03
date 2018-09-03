@@ -4,7 +4,8 @@ class UserForm extends Component {
   render() {
     return (
       <div>
-        Username: <input value={this.props.user} onChange={this.handleChange} />
+        Username:{' '}
+        <input value={this.props.value} onChange={this.handleChange} />
       </div>
     )
   }

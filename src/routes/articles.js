@@ -11,7 +11,7 @@ class ArticlesRoute extends Component {
     return (
       <div>
         <ArticleList />
-        <Route path="/articles/:id" children={this.getArticle} />
+        <Route path="/articles/:id" exact children={this.getArticle} />
       </div>
     )
   }

@@ -45,8 +45,7 @@ export default connect(
   (state) => ({
     articles: filtratedArticlesSelector(state),
     loading: articlesLoadingSelector(state),
-    loaded: articlesLoadedSelector(state),
-    router: (state) => state.router
+    loaded: articlesLoadedSelector(state)
   }),
   { fetchData: loadAllArticles }
 )(accordion(ArticleList))

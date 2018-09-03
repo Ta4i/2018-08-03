@@ -11,4 +11,6 @@ function MenuItem({ children, ...rest }) {
   )
 }
 
+MenuItem.propTypes = {}
+
 export default MenuItem
